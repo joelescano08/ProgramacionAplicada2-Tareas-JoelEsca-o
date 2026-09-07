@@ -18,7 +18,7 @@ const validarProducto = (req, res, next) => {
         return res.status(400).json({ error: "Faltan campos obligatorios: nombre, precio, cantidad." });
     }
     if (precio <= 0 || cantidad <= 0) {
-        return res.status(400).json({ error: "El precio y la cantidad deben ser números positivos mayores a 0." });
+        return res.status(400).json({ error: "El precio y cantidad deben ser números positivos mayores a 0." });
     }
     next();
 };

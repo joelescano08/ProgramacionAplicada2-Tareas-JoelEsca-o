@@ -16,7 +16,7 @@ const validarEncuesta = (req, res, next) => {
         return res.status(400).json({ error: "Pregunta y opciones (como arreglo) son requeridas" });
     }
     if (opciones.length < 2) {
-        return res.status(400).json({ error: "Se requieren mínimo 2 opciones para crear la encuesta" });
+        return res.status(400).json({ error: "Se requieren 2 opciones para crear la encuesta" });
     }
     next();
 };

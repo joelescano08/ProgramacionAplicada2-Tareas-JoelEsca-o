@@ -12,7 +12,7 @@ let nextId = 1;
 
 const validarProducto = (req, res, next) => {
     if (!req.body.producto || req.body.stock === undefined) {
-        return res.status(400).json({ error: "El nombre del producto y el stock son obligatorios" });
+        return res.status(400).json({ error: "El nombre del producto y stock son obligatorios" });
     }
     next();
 };
