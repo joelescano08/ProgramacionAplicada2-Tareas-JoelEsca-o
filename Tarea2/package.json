@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "postinstall": "prisma skills sync || exit 0"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +20,6 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14",
-    "prisma": "^8.0.0-rc.15"
+    "prisma": "^7.10.0"
   }
 }

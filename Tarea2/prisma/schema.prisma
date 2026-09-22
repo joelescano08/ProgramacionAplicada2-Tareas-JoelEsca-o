@@ -27,7 +27,7 @@ model Opcion {
   encuesta   Encuesta @relation(fields: [encuestaId], references: [id], onDelete: Cascade)
 }
 
-model Articulo {
+model Inventario {
   id          Int    @id @default(autoincrement())
   producto    String
   stock       Int
