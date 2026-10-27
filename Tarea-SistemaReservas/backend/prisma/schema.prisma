@@ -18,6 +18,7 @@ model Usuario {
   email    String @unique
   password String
   rol      String @default("cliente")
+  reservas Reserva[]
 }
 
 model Servicio {
@@ -26,4 +27,16 @@ model Servicio {
   descripcion String
   duracion    Int
   precio      Float
+  reservas Reserva[]
+}
+model Reserva {
+  id         Int      @id @default(autoincrement())
+  fecha      String  
+  hora       String   
+  estado     String   @default("pendiente") 
+  usuarioId  Int
+  servicioId Int
+  usuario    Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  servicio   Servicio @relation(fields: [servicioId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
 }
