@@ -99,8 +99,8 @@ export default function MisReservasScreen() {
           renderItem={({ item }) => (
             <View style={styles.card}>
               <Text style={styles.serviceName}>{item.servicio?.nombre || 'Servicio'}</Text>
-              <Text style={styles.detailText}>📅 Fecha: {item.fecha}</Text>
-              <Text style={styles.detailText}>⏰ Hora: {item.hora}</Text>
+              <Text style={styles.detailText}>Fecha: {item.fecha}</Text>
+              <Text style={styles.detailText}>Hora: {item.hora}</Text>
               <Text style={styles.detailText}>
                 Estado:{' '}
                 <Text

@@ -33,6 +33,9 @@ export default function LoginScreen() {
 
       await AsyncStorage.setItem('token', data.token);
 
+      const rolUsuario = data.usuario?.rol || data.rol || 'cliente';
+      await AsyncStorage.setItem('rol', rolUsuario);
+
       router.replace('/servicios');
     } catch (error: any) {
       Alert.alert('Error', error.message);
@@ -62,9 +65,9 @@ export default function LoginScreen() {
         secureTextEntry
       />
 
-      <TouchableOpacity 
-        style={styles.button} 
-        onPress={handleLogin} 
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleLogin}
         disabled={loading}
       >
         {loading ? (
@@ -74,8 +77,8 @@ export default function LoginScreen() {
         )}
       </TouchableOpacity>
 
-      <TouchableOpacity 
-        style={styles.linkButton} 
+      <TouchableOpacity
+        style={styles.linkButton}
         onPress={() => router.push('/registro')}
       >
         <Text style={styles.linkText}>¿No tienes cuenta? Regístrate aquí</Text>
