@@ -31,17 +31,15 @@ export default function ServiciosScreen() {
       }
 
       const response = await fetch(`${API_URL}/servicios`, {
-        method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || data.mensaje || 'Error al obtener servicios');
+        throw new Error(data.error || 'Error al obtener servicios');
       }
 
       setServicios(data);
@@ -69,37 +67,47 @@ export default function ServiciosScreen() {
     <View style={styles.container}>
       <View style={styles.headerRow}>
         <TouchableOpacity 
+          style={styles.reservasButton} 
+          onPress={() => router.push('/reservas' as any)}
+        >
+          <Text style={styles.buttonText}>Mis Reservas</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
           style={styles.addButton} 
           onPress={() => router.push('/crear-servicio')}
         >
-          <Text style={styles.addButtonText}>+ Crear Servicio</Text>
+          <Text style={styles.buttonText}>+ Crear</Text>
         </TouchableOpacity>
 
         <TouchableOpacity 
           style={styles.logoutButton} 
           onPress={handleCerrarSesion}
         >
-          <Text style={styles.logoutText}>Salir</Text>
+          <Text style={styles.buttonText}>Salir</Text>
         </TouchableOpacity>
       </View>
 
       {servicios.length === 0 ? (
         <View style={styles.centerContainer}>
-          <Text style={styles.emptyText}>No hay servicios registrados en el sistema.</Text>
+          <Text style={styles.emptyText}>No hay servicios disponibles.</Text>
         </View>
       ) : (
         <FlatList
           data={servicios}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <TouchableOpacity 
+              style={styles.card}
+              onPress={() => router.push(`/servicios/${item.id}`as any)}
+            >
               <Text style={styles.cardTitle}>{item.nombre}</Text>
               <Text style={styles.cardDescription}>{item.descripcion}</Text>
               <View style={styles.cardDetailsRow}>
-                <Text style={styles.cardDetail}>Duración: {item.duracion} min</Text>
+                <Text style={styles.cardDetail}>{item.duracion} min</Text>
                 <Text style={styles.cardPrice}>${item.precio}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           )}
         />
       )}
@@ -108,76 +116,18 @@ export default function ServiciosScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#f8fafc',
-  },
-  centerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  addButton: {
-    backgroundColor: '#2563eb',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-  },
-  addButtonText: {
-    color: '#ffffff',
-    fontWeight: 'bold',
-  },
-  logoutButton: {
-    backgroundColor: '#ef4444',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-  },
-  logoutText: {
-    color: '#ffffff',
-    fontWeight: 'bold',
-  },
-  emptyText: {
-    color: '#64748b',
-    fontSize: 16,
-  },
-  card: {
-    backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: '#e2e8f0',
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#0f172a',
-    marginBottom: 4,
-  },
-  cardDescription: {
-    fontSize: 14,
-    color: '#475569',
-    marginBottom: 12,
-  },
-  cardDetailsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  cardDetail: {
-    fontSize: 14,
-    color: '#64748b',
-  },
-  cardPrice: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#16a34a',
-  },
+  container: { flex: 1, padding: 16, backgroundColor: '#f8fafc' },
+  centerContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  headerRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16, gap: 8 },
+  reservasButton: { backgroundColor: '#059669', paddingVertical: 10, paddingHorizontal: 12, borderRadius: 8, flex: 1, alignItems: 'center' },
+  addButton: { backgroundColor: '#2563eb', paddingVertical: 10, paddingHorizontal: 12, borderRadius: 8, alignItems: 'center' },
+  logoutButton: { backgroundColor: '#ef4444', paddingVertical: 10, paddingHorizontal: 12, borderRadius: 8, alignItems: 'center' },
+  buttonText: { color: '#ffffff', fontWeight: 'bold', fontSize: 13 },
+  emptyText: { color: '#64748b', fontSize: 16 },
+  card: { backgroundColor: '#ffffff', padding: 16, borderRadius: 8, marginBottom: 12, borderWidth: 1, borderColor: '#e2e8f0' },
+  cardTitle: { fontSize: 18, fontWeight: 'bold', color: '#0f172a', marginBottom: 4 },
+  cardDescription: { fontSize: 14, color: '#475569', marginBottom: 12 },
+  cardDetailsRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  cardDetail: { fontSize: 14, color: '#64748b' },
+  cardPrice: { fontSize: 16, fontWeight: 'bold', color: '#16a34a' },
 });

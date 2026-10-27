@@ -13,6 +13,9 @@ export default function RootLayout() {
       <Stack.Screen name="registro" options={{ title: 'Registro de Usuario' }} />
       <Stack.Screen name="servicios" options={{ title: 'Servicios' }} />
       <Stack.Screen name="crear-servicio" options={{ title: 'Nuevo Servicio' }} />
+      <Stack.Screen name="Detalle de Servicio"/>
+      <Stack.Screen name="Mis Reservas"/>
+      <Stack.Screen name="Nueva Reserva"/>
     </Stack>
   );
 }
