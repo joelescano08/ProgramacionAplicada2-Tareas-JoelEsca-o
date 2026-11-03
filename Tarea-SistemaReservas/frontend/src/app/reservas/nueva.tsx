@@ -13,13 +13,13 @@ export default function NuevaReservaScreen() {
 
   const handleCrearReserva = async () => {
     if (!fecha.trim() || !hora.trim()) {
-      Alert.alert('Atención', 'Ingresa la fecha (YYYY-MM-DD) y la hora (HH:mm).');
+      Alert.alert('Atención', 'Ingresa la fecha (Año-Mes-Día) y la hora (HH:mm).');
       return;
     }
 
     const fechaHoraReserva = new Date(`${fecha.trim()}T${hora.trim()}`);
     if (isNaN(fechaHoraReserva.getTime())) {
-      Alert.alert('Atención', 'Formato no válido. Usa YYYY-MM-DD para fecha y HH:mm para hora.');
+      Alert.alert('Atención', 'Formato no válido. Usa Año-Mes-Día para fecha y (Hora:Minuto) para hora.');
       return;
     }
 
@@ -80,7 +80,7 @@ export default function NuevaReservaScreen() {
       <Text style={styles.label}>Hora (Formato 24 Horas)</Text>
       <TextInput
         style={styles.input}
-        placeholder="Ej: 14:30"
+        placeholder="Ej: 15:30"
         value={hora}
         onChangeText={setHora}
       />

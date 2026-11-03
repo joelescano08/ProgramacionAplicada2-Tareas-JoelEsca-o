@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   serviceName: { fontSize: 18, fontWeight: 'bold', color: '#0f172a', marginBottom: 8 },
   detailText: { fontSize: 14, color: '#475569', marginBottom: 4 },
   statusTag: { fontWeight: 'bold' },
-  statusPendiente: { color: '#d97706' },
+  statusPendiente: { color: '#c9710d' },
   statusCompletada: { color: '#16a34a' },
   statusCancelada: { color: '#dc2626' },
   cancelButton: { marginTop: 12, backgroundColor: '#ef4444', paddingVertical: 10, borderRadius: 6, alignItems: 'center' },
