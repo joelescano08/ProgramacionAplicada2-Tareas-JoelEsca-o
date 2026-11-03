@@ -6,21 +6,35 @@ export const crearReserva = async (req, res) => {
     const usuarioId = req.usuario.id;
 
     if (!fecha || !hora || !servicioId) {
-      return res.status(400).json({ error: 'Todos los campos (fecha, hora, servicioId) son obligatorios.' });
+      return res.status(400).json({ error: 'Todos los campos son obligatorios.' });
     }
 
     const fechaReserva = new Date(`${fecha}T${hora}`);
     const ahora = new Date();
-    if (fechaReserva < ahora) {
-      return res.status(400).json({ error: 'No se puede reservar en una fecha o hora pasada.' });
+    if (fechaReserva <= ahora) {
+      return res.status(400).json({ error: 'La fecha y hora de la reserva debe ser en el futuro.' });
     }
 
     const servicio = await db.servicio.findUnique({
       where: { id: Number(servicioId) },
     });
-
     if (!servicio) {
-      return res.status(404).json({ error: 'El servicio no existe.' });
+      return res.status(404).json({ error: 'El servicio especificado no existe.' });
+    }
+    if (!servicio.activo) {
+      return res.status(400).json({ error: 'Este servicio no se encuentra activo actualmente.' });
+    }
+
+    const reservaDuplicada = await db.reserva.findFirst({
+      where: {
+        usuarioId: usuarioId,
+        servicioId: Number(servicioId),
+        fecha: fecha,
+        estado: { not: 'cancelada' } 
+      }
+    });
+    if (reservaDuplicada) {
+      return res.status(409).json({ error: 'Ya tienes una reserva activa para este servicio en esta misma fecha.' });
     }
 
     const nuevaReserva = await db.reserva.create({
@@ -39,7 +53,6 @@ export const crearReserva = async (req, res) => {
     res.status(500).json({ error: 'Error al crear la reserva: ' + error.message });
   }
 };
-
 export const obtenerMisReservas = async (req, res) => {
   try {
     const usuarioId = req.usuario.id;

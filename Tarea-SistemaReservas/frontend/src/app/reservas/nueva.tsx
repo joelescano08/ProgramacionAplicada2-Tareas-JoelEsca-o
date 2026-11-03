@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import { programarNotificacionReserva, solicitarPermisosNotificacion } from '../../lib/notificaciones';
+import React, { useState, useEffect} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 export default function NuevaReservaScreen() {
   const { servicioId, nombre } = useLocalSearchParams();
@@ -10,6 +13,10 @@ export default function NuevaReservaScreen() {
   const [loading, setLoading] = useState(false);
 
   const API_URL = process.env.EXPO_PUBLIC_API_URL;
+
+  useEffect(() => {
+    solicitarPermisosNotificacion();
+  }, []);
 
   const handleCrearReserva = async () => {
     if (!fecha.trim() || !hora.trim()) {
@@ -50,6 +57,8 @@ export default function NuevaReservaScreen() {
       if (!response.ok) {
         throw new Error(data.error || 'Ocurrió un error al procesar la reserva.');
       }
+
+      await programarNotificacionReserva(data.id, nombre as string, fecha.trim(), hora.trim());
 
       Alert.alert('¡Éxito!', 'Tu reserva ha sido creada correctamente.', [
         {

@@ -4,6 +4,7 @@ import db from './db.js';
 import authRoutes from './routes/auth.routes.js';
 import servicioRoutes from './routes/servicio.routes.js';
 import reservasRoutes from './routes/reservas.routes.js'
+import usuariosRouter from './routes/usuarios.routes.js';
 
 dotenv.config();
 
@@ -13,7 +14,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/servicios', servicioRoutes);
-app.use('/reservas', reservasRoutes)
+app.use('/reservas', reservasRoutes);
+app.use('/usuarios', usuariosRouter);
 
 app.get('/', (req, res) => {
   res.json({ message: 'API de Reservas funcionando correctamente' });

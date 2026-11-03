@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { cancelarNotificacionReserva } from '@/lib/notificaciones';
 
 interface Reserva {
   id: number;
@@ -66,6 +67,10 @@ export default function MisReservasScreen() {
               if (!response.ok) {
                 throw new Error(data.error || 'No se pudo cancelar la reserva.');
               }
+
+              await cancelarNotificacionReserva(id);
+              
+              
 
               Alert.alert('¡Éxito!', 'Reserva cancelada correctamente.');
               cargarReservas();
