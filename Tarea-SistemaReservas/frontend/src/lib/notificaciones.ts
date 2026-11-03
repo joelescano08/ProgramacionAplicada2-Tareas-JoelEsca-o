@@ -42,7 +42,7 @@ export const programarNotificacionReserva = async (reservaId: number, nombreServ
 
     const notificacionId = await scheduleNotificationAsync({
       content: { 
-        title: 'Recordatorio de Reserva 📅', 
+        title: 'Recordatorio de Reserva', 
         body: `Recuerda que mañana tienes tu servicio de: ${nombreServicio} a las ${hora}` 
       },
       trigger: { 
