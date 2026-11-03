@@ -66,25 +66,22 @@ export default function ServiciosScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.headerRow}>
-        <TouchableOpacity 
-          style={styles.reservasButton} 
+        <TouchableOpacity
+          style={styles.reservasButton}
           onPress={() => router.push('/reservas' as any)}
         >
           <Text style={styles.buttonText}>Mis Reservas</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity 
-          style={styles.addButton} 
+        <TouchableOpacity
+          style={styles.addButton}
           onPress={() => router.push('/crear-servicio')}
         >
           <Text style={styles.buttonText}>+ Crear</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity 
-          style={styles.logoutButton} 
-          onPress={handleCerrarSesion}
-        >
-          <Text style={styles.buttonText}>Salir</Text>
+        <TouchableOpacity style={{ ...styles.logoutButton, backgroundColor: '#475569' }} onPress={() => router.push('/perfil' as any)}>
+          <Text style={styles.buttonText}>Mi Perfil</Text>
         </TouchableOpacity>
       </View>
 
@@ -97,9 +94,9 @@ export default function ServiciosScreen() {
           data={servicios}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.card}
-              onPress={() => router.push(`/servicios/${item.id}`as any)}
+              onPress={() => router.push(`/servicios/${item.id}` as any)}
             >
               <Text style={styles.cardTitle}>{item.nombre}</Text>
               <Text style={styles.cardDescription}>{item.descripcion}</Text>
