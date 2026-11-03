@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator, Alert } from 'react-native';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Servicio {
@@ -14,8 +14,24 @@ interface Servicio {
 export default function ServiciosScreen() {
   const [servicios, setServicios] = useState<Servicio[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  const [esAdmin, setEsAdmin] = useState(false); 
 
   const API_URL = process.env.EXPO_PUBLIC_API_URL;
+  useFocusEffect(
+    useCallback(() => {
+      verificarRol();
+    }, [])
+  );
+
+  const verificarRol = async () => {
+    const rol = await AsyncStorage.getItem('rol');
+    if (rol === 'admin') {
+      setEsAdmin(true);
+    } else {
+      setEsAdmin(false);
+    }
+  };
 
   useEffect(() => {
     cargarServicios();
@@ -73,12 +89,15 @@ export default function ServiciosScreen() {
           <Text style={styles.buttonText}>Mis Reservas</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => router.push('/crear-servicio')}
-        >
-          <Text style={styles.buttonText}>+ Crear</Text>
-        </TouchableOpacity>
+        {/* 3. ENVOLVEMOS EL BOTÓN DE CREAR CON LA CONDICIÓN esAdmin */}
+        {esAdmin && (
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => router.push('/crear-servicio')}
+          >
+            <Text style={styles.buttonText}>+ Crear</Text>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity style={{ ...styles.logoutButton, backgroundColor: '#475569' }} onPress={() => router.push('/perfil' as any)}>
           <Text style={styles.buttonText}>Mi Perfil</Text>
