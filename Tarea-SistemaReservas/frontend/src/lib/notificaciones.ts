@@ -1,4 +1,3 @@
-// shortcut: importa directo desde build para que no crashee en Expo Go Android
 import { setNotificationHandler } from 'expo-notifications/build/NotificationsHandler';
 import { requestPermissionsAsync } from 'expo-notifications/build/NotificationPermissions';
 import { scheduleNotificationAsync } from 'expo-notifications/build/scheduleNotificationAsync';
