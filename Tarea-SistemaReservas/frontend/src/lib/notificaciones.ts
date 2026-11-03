@@ -14,19 +14,25 @@ setNotificationHandler({
   })
 });
 
-export const solicitarPermisosNotificacion = async () => {
+export const tienePermiso = async () => {
   const { granted, canAskAgain } = await requestPermissionsAsync();
   if (!granted) {
-    console.warn(`Permiso de notificaciones denegado${canAskAgain ? '' : ' (actívalo en Ajustes)'}`);
+    console.warn(`Permiso de notificaciones denegado${canAskAgain ? '' : ' (actívalo en Ajustes > Apps > Expo Go > Notificaciones)'}`);
   }
   return granted;
 };
 
 export const programarNotificacionReserva = async (reservaId: number, nombreServicio: string, fecha: string, hora: string) => {
   try {
-    const tienePermiso = await solicitarPermisosNotificacion();
-    if (!tienePermiso) return;
+    if (!(await tienePermiso())) return;
 
+    await scheduleNotificationAsync({
+      content: { 
+        title: '¡Reserva Confirmada!', 
+        body: `Has reservado con éxito el servicio: ${nombreServicio}` 
+      },
+      trigger: null
+    });
     const fechaHoraReserva = new Date(`${fecha}T${hora}`);
     const ahora = new Date();
     const msFaltantes = fechaHoraReserva.getTime() - ahora.getTime();
@@ -51,7 +57,7 @@ export const programarNotificacionReserva = async (reservaId: number, nombreServ
     });
 
     await AsyncStorage.setItem(`notif_${reservaId}`, notificacionId);
-    
+
   } catch (err) {
     console.warn('No se pudo programar la notificación:', err);
   }

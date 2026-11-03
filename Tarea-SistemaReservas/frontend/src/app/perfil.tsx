@@ -74,7 +74,7 @@ export default function PerfilScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Mi Perfil</Text>
       
-      <Text style={styles.label}>Correo Electrónico (No editable)</Text>
+      <Text style={styles.label}>Correo Electrónico</Text>
       <TextInput style={[styles.input, styles.disabled]} value={email} editable={false} />
 
       <Text style={styles.label}>Nombre Completo</Text>

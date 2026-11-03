@@ -1,4 +1,4 @@
-import { programarNotificacionReserva, solicitarPermisosNotificacion } from '../../lib/notificaciones';
+import { programarNotificacionReserva, tienePermiso } from '../../lib/notificaciones';
 import React, { useState, useEffect} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
@@ -15,7 +15,7 @@ export default function NuevaReservaScreen() {
   const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
   useEffect(() => {
-    solicitarPermisosNotificacion();
+    tienePermiso();
   }, []);
 
   const handleCrearReserva = async () => {

@@ -89,7 +89,6 @@ export default function ServiciosScreen() {
           <Text style={styles.buttonText}>Mis Reservas</Text>
         </TouchableOpacity>
 
-        {/* 3. ENVOLVEMOS EL BOTÓN DE CREAR CON LA CONDICIÓN esAdmin */}
         {esAdmin && (
           <TouchableOpacity
             style={styles.addButton}
